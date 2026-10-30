@@ -2,8 +2,15 @@
 In this challenge, we will focus on creating three components that we will later use as we create a news site similar to [Hacker News](https://news.ycombinator.com/).
 
 ## Initial Setup
-To start, create a new create-react-app project from your terminal: `npm create vite news-site-i`
-In your new project, copy over the `components` and `data` directories under `src/` and replace the boilerplate `App.js` with the one given here.
+To start, create a new Vite + React project from your terminal (Vite needs Node 20.19+ or 22.12+; the devcontainer uses Node 24):
+
+```sh
+npm create vite@latest news-site-i -- --template react
+cd news-site-i
+npm install
+```
+
+In your new project, copy over the `components` and `data` directories under `src/` and replace the boilerplate `App.jsx` with the one given here. Then run `npm run dev` and open [http://localhost:5173](http://localhost:5173).
 
 Each of the three components listed below has been stubbed out - your mission is to create the content that the component should `render`, and handle the `props` that are being passed in appropriately.
 
@@ -12,16 +19,16 @@ Before diving in, it may be helpful to inspect the files in the `data` directory
 
 ## Component I: ArticleTeaser
 The `ArticleTeaser` component should accept the following `props` from `App.jsx`:
-1. `objectID` - a number
+1. `objectID` - a string
 2. `title` - a string
 3. `created_at` - a string
-4. `handleTitleClick` - a event handling function
+4. `handleTitleClick` - an event handling function
 
 All of these `props` will always be passed in.
 
 The `ArticleTeaser` component should:
 1. Display the `title` inside of an `<h2>` tag.
-2. When the `title` `<h2>` tag is clicked, it should call `props.handleTitleClick(props.id);`. 
+2. When the `title` `<h2>` tag is clicked, it should call `props.handleTitleClick(props.objectID);`. 
 3. Display the `created_at` in a `<p>` tag.
 
 
@@ -31,15 +38,15 @@ Therefore, the `Article` component should accept the following `props`:
 1. `title` - a string
 2. `created_at` - a string
 3. `url` - a string
-4. `author` - a string (optional)
+4. `author` - a string
 
-The `title`, `abstract`, and `created_date` `props` will always contain values. `image` and `byline` may be set, but they may also be null. Be sure to account for this.
+The `title`, `created_at`, and `author` `props` will always contain values. `url` may be set, but it may also be null. Be sure to account for this.
 
 The `Article` component should:
 1. Display the `title` inside of an `<h1>` tag.
 2. Display the `created_at` in a `<p>` tag.
 3. Display the `url` (if it exists) in an `<a>` tag.
-5. Display the `author` inside of a `<p>` tag.
+4. Display the `author` inside of a `<p>` tag.
 
 #### Sidenote: Conditional rendering in React
 How do I only render something if the data exists? There are several ways we can handle this in React. Here we will explore three common options:
@@ -49,7 +56,7 @@ How do I only render something if the data exists? There are several ways we can
 ```javascript
 // in the render
 <ParentComponent>
-  {dataExists && <ChildComponent>}
+  {dataExists && <ChildComponent />}
 </ParentComponent>
 ```
 Explanation: If there is just one piece of data we're checking for, we can do a quick existence check which will coerce the data to a boolean value `true` if the data does exist and then render the component/element that follows `&&`. If the data doesn't exist, it will be coerced to a boolean value `false` and will not render the child component/element.
